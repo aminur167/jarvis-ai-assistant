@@ -1,0 +1,11 @@
+SpeechRecognition
+pyttsx3
+gTTS
+pygame
+requests
+openai
+
+# Microphone support on Windows often needs PyAudio.
+# If pip install pyaudio fails, install a matching wheel or use:
+# pip install pipwin
+# pipwin install pyaudio

@@ -3,3 +3,9 @@ venv/
 env/
 __pycache__/
 *.py[cod]
+temp.mp3
+notes.txt
+memory.json
+command_history.json
+tempCodeRunnerFile.py
+.env
