@@ -7,6 +7,7 @@ import mediaLibrary
 from ai_service import ai_process
 from apps import handle_app
 from banglaCommands import normalize_bangla_banglish_command
+from briefing import handle_daily_briefing
 from calculator import handle_calculator
 from clipboard_helper import handle_clipboard
 from config import CONVERSATION_COMMANDS
@@ -16,6 +17,7 @@ from memory import handle_memory
 from news import get_news_headlines
 from notes import handle_notes
 from reminders import handle_reminder
+from routines import get_routine_commands, handle_routines
 from search import search_web
 from speech import recognize_command_audio, speak
 from system_control import handle_system_control
@@ -107,6 +109,7 @@ def handle_ai_fallback(command):
 
 
 COMMAND_HANDLERS = [
+    handle_routines,
     handle_reminder,
     handle_memory,
     handle_history,
@@ -122,39 +125,69 @@ COMMAND_HANDLERS = [
     tell_date,
     handle_weather,
     handle_news,
+    handle_daily_briefing,
     handle_notes,
     handle_ai_command,
 ]
 
 
-def process_command(command):
+def _speak_responses(responses):
+    for response in responses:
+        speak(response)
+
+
+def process_command_text(command, speak_response=False, record=True):
     if not command or not command.strip():
-        speak("I did not hear any command.")
-        return
+        responses = ["I did not hear any command."]
+        if speak_response:
+            _speak_responses(responses)
+        return responses
 
     original_command = command.strip()
     command = normalize_bangla_banglish_command(original_command)
-    record_command(original_command, command)
+    if record:
+        record_command(original_command, command)
+
+    routine_name, routine_commands = get_routine_commands(command)
+    if routine_commands:
+        responses = [f"Starting routine {routine_name}."]
+        for routine_command in routine_commands:
+            responses.extend(process_command_text(routine_command, speak_response=False, record=True))
+        if speak_response:
+            _speak_responses(responses)
+        return responses
 
     for handler in COMMAND_HANDLERS:
         handled, response = handler(command)
         if handled:
+            responses = []
             if isinstance(response, list):
-                for item in response:
-                    speak(item)
+                responses.extend(item for item in response if item)
             elif response:
-                speak(response)
-            return
+                responses.append(response)
+            if speak_response:
+                _speak_responses(responses)
+            return responses
 
     if looks_like_location_command(command):
         handled, response = tell_weather(city=command, speak_error=False)
         if handled and response:
-            speak(response)
-            return
+            responses = [response]
+            if speak_response:
+                _speak_responses(responses)
+            return responses
 
     handled, response = handle_ai_fallback(command)
     if handled and response:
-        speak(response)
+        responses = [response]
+        if speak_response:
+            _speak_responses(responses)
+        return responses
+    return []
+
+
+def process_command(command):
+    process_command_text(command, speak_response=True)
 
 
 def listen_for_followup_commands(recognizer):

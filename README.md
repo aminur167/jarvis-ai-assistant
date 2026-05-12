@@ -23,6 +23,7 @@ set NEWS_API_KEY=your_newsapi_key
 set WEATHER_CITY=Dhaka
 set WEATHER_COUNTRY=Bangladesh
 set JARVIS_CONVERSATION_COMMANDS=5
+set JARVIS_ROUTINES_FILE=routines.json
 ```
 
 ## Run
@@ -34,6 +35,12 @@ python main.py
 Say `Jarvis`, then give a command.
 
 After the wake word, Jarvis stays active for a short conversation. Say `stop`, `sleep`, or `thank you` to end conversation mode.
+
+To use the desktop interface:
+
+```bash
+python gui.py
+```
 
 ## Example Commands
 
@@ -136,9 +143,26 @@ Other:
 - `news`
 - ask any general question for the AI fallback
 
+Daily briefing:
+- `daily briefing`
+- `morning briefing`
+- `brief me`
+- `start my day`
+
+Custom routines:
+- `create routine study mode: open vs code; play focus music; set timer for 25 minutes`
+- `run routine study mode`
+- `show routines`
+- `delete routine study mode`
+
+GUI:
+- Run `python gui.py`
+- Type commands, use the mic button, or use quick buttons for daily briefing, routines, and notes.
+
 ## Project Structure
 
 - `main.py`: app loop and command router
+- `gui.py`: desktop GUI for text and microphone commands
 - `speech.py`: speech recognition and speaking
 - `banglaCommands.py`: Bangla/Banglish command normalization
 - `websites.py`: website shortcuts
@@ -146,6 +170,8 @@ Other:
 - `weather.py`: dynamic weather lookup
 - `mediaLibrary.py`: media categories and YouTube search
 - `reminders.py`: timer and reminder scheduler
+- `briefing.py`: daily briefing with time, date, weather, and news
+- `routines.py`: custom aliases and multi-command routines
 - `memory.py`: persistent user memory
 - `history.py`: local command history
 - `system_control.py`: volume, mute, battery, screenshot, shutdown/restart confirmation

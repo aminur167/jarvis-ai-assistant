@@ -8,12 +8,23 @@ from gtts import gTTS
 
 
 recognizer = sr.Recognizer()
-engine = pyttsx3.init()
+engine = None
+
+
+def _get_engine():
+    global engine
+    if engine is None:
+        engine = pyttsx3.init()
+    return engine
 
 
 def speak_old(text):
-    engine.say(text)
-    engine.runAndWait()
+    try:
+        text_to_speech = _get_engine()
+        text_to_speech.say(text)
+        text_to_speech.runAndWait()
+    except Exception:
+        print(text)
 
 
 def speak(text):
