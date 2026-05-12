@@ -21,6 +21,7 @@ from routines import get_routine_commands, handle_routines
 from search import search_web
 from speech import recognize_command_audio, speak
 from system_control import handle_system_control
+from tasks import handle_tasks
 from weather import looks_like_location_command, tell_weather
 from websites import open_website
 
@@ -111,6 +112,7 @@ def handle_ai_fallback(command):
 COMMAND_HANDLERS = [
     handle_routines,
     handle_reminder,
+    handle_tasks,
     handle_memory,
     handle_history,
     handle_calculator,

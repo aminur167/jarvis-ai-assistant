@@ -24,6 +24,7 @@ set WEATHER_CITY=Dhaka
 set WEATHER_COUNTRY=Bangladesh
 set JARVIS_CONVERSATION_COMMANDS=5
 set JARVIS_ROUTINES_FILE=routines.json
+set JARVIS_TASKS_FILE=tasks.json
 ```
 
 ## Run
@@ -75,6 +76,14 @@ Notes:
 - `take note finish Python project`
 - `show notes`
 - `clear notes`
+
+Tasks:
+- `add task finish assignment`
+- `show tasks`
+- `complete task 1`
+- `reopen task 1`
+- `delete task 1`
+- `clear tasks`
 
 Memory:
 - `my name is Aminur`
@@ -157,7 +166,7 @@ Custom routines:
 
 GUI:
 - Run `python gui.py`
-- Type commands, use the mic button, or use quick buttons for daily briefing, routines, and notes.
+- Type commands, use the mic button, or use quick buttons for daily briefing, routines, tasks, and notes.
 
 ## Project Structure
 
@@ -179,6 +188,7 @@ GUI:
 - `clipboard_helper.py`: clipboard read/copy/clear
 - `calculator.py`: safe calculator and currency converter
 - `notes.py`: local notes
+- `tasks.py`: persistent task and todo manager
 - `apps.py`: local app launcher
 - `news.py`: News API helper
 - `ai_service.py`: OpenAI fallback

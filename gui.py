@@ -68,6 +68,7 @@ class JarvisGUI(tk.Tk):
         ttk.Button(quick, text="Show Routines", command=lambda: self.run_command("show routines")).pack(
             side=tk.LEFT, padx=(8, 0)
         )
+        ttk.Button(quick, text="Show Tasks", command=lambda: self.run_command("show tasks")).pack(side=tk.LEFT, padx=(8, 0))
         ttk.Button(quick, text="Show Notes", command=lambda: self.run_command("show notes")).pack(side=tk.LEFT, padx=(8, 0))
 
     def append_log(self, speaker, text):
